@@ -3,9 +3,10 @@ import qs from 'qs'
 // import app from "../main.js"
 
 const http = axios.create({
-    // /baseURL : 'http://localhost:8080/api/4',
     baseURL: '/api/4',
-    // baseUrl: process.env.NODE_ENV === 'production' ? 'https://news-at.zhihu.com/api/4' : '/api/4',
+    baseURL: process.env.NODE_ENV === 'development' ? '/api/4' : 'https://news-at.zhihu.com/api/4',
+    // baseURL: 'https://news-at.zhihu.com/api/4',
+    // baseUrl: process.env.NODE_ENV === 'dev' ? '/api/4' :'https://news-at.zhihu.com/api/4',
     timeout: 5000,
     headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
 })
@@ -16,7 +17,6 @@ http.interceptors.request.use(config => {
     // app.$vux.loading.show({
     //     text: '数据加载中……'
     // });
-
     config.method === 'post'
         ? config.data = qs.stringify({ ...config.data })
         : config.params = { ...config.params };
@@ -49,7 +49,6 @@ http.interceptors.response.use(
     error => {
         console.log('error' + error);
         console.log(JSON.stringify(error));
-
         return Promise.reject(error)
     }
 );
