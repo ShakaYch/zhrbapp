@@ -2,7 +2,7 @@
   <li class="single_list" :class="{'be_visited':beVisted}" @click="goto(singleData.id)">
     <div class="news_title">{{singleData.title}}</div>
     <div class="img_zone">
-      <img :src="singleData.images[0]" alt />
+      <img v-lazy="singleData.images[0]" alt />
     </div>
   </li>
 </template>

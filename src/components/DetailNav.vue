@@ -3,7 +3,7 @@
     <div class="btn_back" @click="back">
       <i class="iconfont icon-icon_left"></i>
     </div>
-
+    <div class="title" @click="gotoTop"> </div>
     <ul class="btn_group">
       <li>
         <i class="iconfont icon-icon_share"></i>
@@ -40,8 +40,12 @@ export default {
   mounted() {},
   methods: {
     // 返回
-    back(){
+    back() {
       this.$router.go(-1);
+    },
+    //回到顶部
+    gotoTop(){
+      // this.$root.Bus.$emit('detailGotoTop')
     },
     getAbout() {
       detailApi.getDetailAbout(this.$route.query.id).then(res => {
@@ -49,15 +53,13 @@ export default {
       });
     },
     //收藏
-    collect(){
-      
-    },
-    like(){},
+    collect() {},
+    like() {},
     //评论
-    comment(){
+    comment() {
       this.$router.push({
-        path:"/comment",
-        query:this.$route.query
+        path: "/comment",
+        query: this.$route.query
       });
     }
   }
@@ -77,7 +79,11 @@ export default {
 
   div {
     width: 50px;
-    margin-right: 100px;
+  }
+
+  .title {
+    flex: 1;
+    height 40px
   }
 
   .btn_group {

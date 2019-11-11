@@ -20,6 +20,11 @@ export default {
     //获取数据
     this.getData();
   },
+  created() {
+    this.$root.Bus.$on("detailGotoTop", value => {
+      this.scrollTo();
+    });
+  },
   mounted() {
     // console.log(this.$route.query);
   },
@@ -37,6 +42,14 @@ export default {
           imgZone.insertAdjacentHTML("beforeend", html);
         });
       });
+    },
+    //回到顶部
+    scrollTo() {
+      this.$refs.scroll.scrollTo(
+        0, //x
+        0, //y
+        700 //延迟
+      );
     }
   }
 };

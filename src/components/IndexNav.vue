@@ -4,7 +4,7 @@
       <i class="iconfont icon-icon_work"></i>
     </div>
 
-    <div class="title">{{msg}}</div>
+    <div class="title" @click="backToTop">{{msg}}</div>
 
     <div class="btn_msg">
       <i class="iconfont icon-icon_notice"></i>
@@ -25,6 +25,10 @@ export default {
   methods: {
     showPop() {
       this.$parent.showPopup();
+    },
+    backToTop() {
+    //去调用index.vue里面的scrollTop方法
+      this.$root.Bus.$emit('gotoTop')
     }
   }
 };

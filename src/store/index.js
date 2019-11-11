@@ -10,6 +10,7 @@ const store = new Vuex.Store({
         user: {},
         // 登录状态
         ifLogin: false,
+        listSrocllTop:0
     },
     getters: {//类似Vue 的 computed
         getStateUserName(state) {//上面的state

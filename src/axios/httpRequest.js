@@ -4,7 +4,7 @@ import qs from 'qs'
 
 const http = axios.create({
     baseURL: '/api/4',
-    baseURL: process.env.NODE_ENV === 'development' ? '/api/4' : 'https://news-at.zhihu.com/api/4',
+    // baseURL: process.env.NODE_ENV === 'development' ? '/api/4' : 'http://154.8.237.28:888/api/4',
     // baseURL: 'https://news-at.zhihu.com/api/4',
     // baseUrl: process.env.NODE_ENV === 'dev' ? '/api/4' :'https://news-at.zhihu.com/api/4',
     timeout: 5000,

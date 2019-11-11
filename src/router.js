@@ -26,7 +26,7 @@ const router = new Router({
       component: Home,
       redirect: '/index',
       children: [
-        { path: '/index', component: Index, name: 'index',meta:{title:'首页'} },
+        { path: '/index', component: Index, name: 'index',meta:{title:'首页',keepAlive:true} },
         {
           path: '/detail', name: 'detail',meta: {title: '详情'},
           // component: Detail

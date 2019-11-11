@@ -4,8 +4,10 @@
         ref="scroll"
         :data="items"
         :options="options"
+        :scrollEvents="['scroll-end']"
         @pulling-down="onPullingDown"
         @pulling-up="onPullingUp"
+        @scroll-end="scrollHandler"
       >
         <!-- 轮播图 -->
         <Slider :sliderData="items" />
@@ -75,14 +77,23 @@ export default {
       pullUpLoadThreshold: 1000,
       pullUpLoadMoreTxt: "加载中……",
       pullUpLoadNoMoreTxt: "上划加载更多",
-      customPullDown: false
+      customPullDown: false,
+      //滚动距离
+      offsetTop:0
     };
   },
-  beforeMount() {
+  created(){
+    this.$root.Bus.$on('gotoTop', value => {
+      this.scrollTo(0);
+    })
     // 初始化今日的时间以便获取历史数据
     this.date = new Date();
     // 获取今日热闻和轮播图
     this.getData();
+  },
+  activated(){
+    this.scrollTo(this.offsetTop);
+    this.$refs.scroll.refresh();
   },
   methods: {
     getData() {
@@ -93,6 +104,9 @@ export default {
           date: "今日热闻",
           listDetail: res.stories
         });
+        // this.$nextTick(()=>{
+        //   this.$refs.scroll.initScroll()
+        // })
       });
     },
     getHistoryData() {
@@ -112,7 +126,6 @@ export default {
       this.dateToStr(this.date);
       this.dateToWord(new Date(this.date.getTime() - 24 * 60 * 60 * 1000));
       console.log(this.ajaxDate);
-
       indexApi.getListData(this.ajaxDate).then(res => {
         console.log(res);
         this.listData.push({
@@ -125,7 +138,6 @@ export default {
       });
     },
     refresh(){
-      
        this.$refs.scroll.refresh();
     },
     dateToStr(date) {
@@ -170,14 +182,27 @@ export default {
     // 上划加载
     onPullingUp() {
       this.getHistoryData();
+    },
+    //回到顶部
+    scrollTo(x) {
+      this.$refs.scroll.scrollTo(
+        0,//x
+        x,//y
+        700//延迟
+      );
+    },
+    scrollHandler(e){
+      console.log(e)
+      this.offsetTop = e.y;
     }
-  },
+  }, 
   computed: {
     options() {
       return {
         pullDownRefresh: this.pullDownRefreshObj,
         pullUpLoad: this.pullUpLoadObj,
-        scrollbar: true
+        scrollbar: true,
+        swipeTime:100
       };
     },
     pullDownRefreshObj: function() {

@@ -50,7 +50,7 @@ export default {
   },
   created() {
     if (this.item.reply_to) {
-      if (this.item.reply_to.state == 0) {
+      if (this.item.reply_to.status == 0) {
         if (this.item.reply_to.content.length > 50) {
           this.hide = true;
           this.showBtn = true;
