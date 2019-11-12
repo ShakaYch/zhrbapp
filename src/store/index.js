@@ -20,6 +20,8 @@ const store = new Vuex.Store({
     mutations: {
         changeStatus(state){//登录后改变状态
             state.ifLogin = true;
+        },
+        handleCollection(state,type){//收藏或取消（0为收藏 1 为取消）
         }
     },
     actions:{//注册actions，相当于vue里的 methods

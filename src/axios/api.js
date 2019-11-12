@@ -1,4 +1,5 @@
 import http from './httpRequest.js'
+import $storage from "@/utils/Storage.js";
 
 //首页接口
 export const indexApi = {
@@ -94,4 +95,52 @@ export const detailApi = {
             method: 'get'
         })
     },
+
+}
+
+export const userApi = {
+    //操作收藏
+    //若第一次收藏则增加一个localstorage
+    changeCollect(id, type, userName) {
+        let userList = $storage.getLocal("user");
+        userList.forEach(item => {
+            if (item.name == userName) {
+                if (type == 0) {
+                    //收藏
+                    item.collections !== undefined ? item.collections.push(id) : item.collections = [id];
+                } else {
+                    //取消收藏
+                    item.collections.splice(item.collections.findIndex(item => item === id), 1);
+                }
+            }
+        });
+        $storage.setLocal("user", userList)
+    },
+    //判断是否收藏
+    checkIfCollected(id, userName) {
+        let userList = $storage.getLocal("user");
+        let flag = false;
+        let userObj = userList.filter(item => {
+            return item.name == userName
+        });
+        //如果没有收藏列表显示未收藏
+        if (userObj[0].collections == undefined) {
+            flag = false;
+        } else {
+            flag = userObj[0].collections.indexOf(id) >= 0 ? true : false;
+        }
+        return flag;
+    },
+    //获取收藏列表
+    getCollectionList(userName) {
+        let list = [];
+        let userList = $storage.getLocal("user");
+        let userObj = userList.filter(item => {
+            return item.name == userName
+        });
+        if (userObj[0].collections !== undefined) {
+            list = userObj[0].collections
+        }
+        return list;
+    }
 }

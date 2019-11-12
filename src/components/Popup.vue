@@ -58,8 +58,7 @@ export default {
     },
     //跳转到我的收藏
     gotoCollection() {
-      // let path = this.$store.state.ifLogin ? '' : '/user/login';
-      // this.$router.push(path);
+      this.$router.push("/collection");
     }
   }
 };

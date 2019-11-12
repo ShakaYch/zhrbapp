@@ -16,6 +16,9 @@ export default {
       beVisted: false
     };
   },
+  mounted(){
+    // console.log(this.singleData)
+  },
   methods: {
     changeVisited() {
       //变成点击过后的状态

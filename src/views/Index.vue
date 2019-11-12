@@ -192,7 +192,7 @@ export default {
       );
     },
     scrollHandler(e){
-      console.log(e)
+      // console.log(e)
       this.offsetTop = e.y;
     }
   }, 

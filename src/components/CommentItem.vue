@@ -61,6 +61,7 @@ export default {
     }
   },
   mounted() {
+    // 隐藏其余的copy窗口
     this.$root.Bus.$on('hideCopy', _ => {
       this.$refs.tip.hide();
     })
