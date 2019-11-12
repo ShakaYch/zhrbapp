@@ -5,7 +5,7 @@
         <img :src="item.avatar" alt />
       </div>
       <span class="user_name">{{item.author}}</span>
-      <span class="btn_more" @click="$refs.tip.show()">
+      <span class="btn_more" @click="showCopy">
         <i class="iconfont icon-icon_more"></i>
       </span>
       <cube-tip ref="tip" class="copy_tips" direction="bottom">
@@ -60,11 +60,20 @@ export default {
       }
     }
   },
-  mounted() {},
+  mounted() {
+    this.$root.Bus.$on('hideCopy', _ => {
+      this.$refs.tip.hide();
+    })
+  },
   methods: {
     showToggle() {
       this.hide = !this.hide;
       this.msg = this.msg == "显示全部" ? "收起" : "显示全部";
+    },
+    //显示复制
+    showCopy(){
+      this.$root.Bus.$emit('hideCopy');
+      this.$refs.tip.show();
     },
     //复制
     copy() {

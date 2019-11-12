@@ -85,6 +85,7 @@ export default {
   .content {
     background-color: #ffffff;
     height: 92vh;
+    overflow: auto;
     margin: 0;
   }
 

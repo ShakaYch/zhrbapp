@@ -5,7 +5,7 @@
     <DetailNav v-if="show==1" />
     <!-- 只有首页index会被keepalive -->
     <keep-alive include="index">
-      <router-view/>
+      <router-view class="scroll_zone"/>
     </keep-alive>
     <cube-extend-popup ref="extendPopup"></cube-extend-popup>
     <!-- <cube-button @click="$refs.extendPopup.show()">显示侧边栏</cube-button> -->

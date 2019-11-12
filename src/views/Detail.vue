@@ -58,6 +58,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style type="text/css" scoped>
 @import "../assets/style/detail.css";
+.detailPage {
+  height: 92vh;
+  overflow-y: auto;
+}
+.detailPage >>> blockquote {
+  text-align: left;
+}
 .detailPage >>> .content-inner {
   background-color: #ffffff !important;
 }
