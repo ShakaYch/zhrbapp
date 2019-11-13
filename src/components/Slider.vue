@@ -62,8 +62,8 @@ export default {
 
   img {
     width: 100%;
-    height 110%
-    margin-top -20px
+    height: 110%;
+    margin-top: -20px;
   }
 
   p {

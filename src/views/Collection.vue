@@ -8,9 +8,12 @@
       <div class="title">我的收藏</div>
     </div>
     <!-- 收藏列表 -->
-    <ul class="collection_group">
-      <singleList v-for="item in data" :key="item.id" :singleData="item"></singleList>
-    </ul>
+    <div class="collection_zone">
+      <div class="null" v-if="data.length==0">暂无收藏内容</div>
+      <ul class="collection_group">
+        <singleList v-for="item in data" :key="item.id" :singleData="item"></singleList>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -35,11 +38,16 @@ export default {
     },
     getData() {
       // 先获取收藏id列表
+      const toast = this.$createToast({
+        txt: 'Loading...',
+        mask: true
+      })
+      toast.show();
       let idArr = userApi.getCollectionList(this.$store.getters.getUserName),
         listArr = [];
       idArr.forEach(item => {
         detailApi.getDetail(item).then(res => {
-          console.log(res);
+          // console.log(res);
           let obj = {
             ga_prefix: res.ga_prefix,
             hint: res.hint,
@@ -54,6 +62,7 @@ export default {
         });
       });
       this.data = listArr;
+      toast.hide();
     }
   }
 };
@@ -80,7 +89,55 @@ export default {
     }
   }
 
-  .collection_group {
+  .null {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    margin: 16px 0;
+    color: #969799;
+    font-size: 14px;
+    line-height: 24px;
+    border-color: #ebedf0;
+    border-style: solid;
+    border-width: 0;
+
+    &::after {
+      display: block;
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      flex: 1;
+      box-sizing: border-box;
+      height: 1px;
+      border-color: inherit;
+      border-style: inherit;
+      border-width: 1px 0 0;
+      content: '';
+      -webkit-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+      margin-left: 18px;
+    }
+
+    &::before {
+      display: block;
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      flex: 1;
+      box-sizing: border-box;
+      height: 1px;
+      border-color: inherit;
+      border-style: inherit;
+      border-width: 1px 0 0;
+      content: '';
+      -webkit-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+      margin-right: 18px;
+    }
+  }
+
+  .collection_zone {
     background-color: #ffffff;
     height: 92vh;
     overflow: auto;

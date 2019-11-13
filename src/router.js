@@ -75,7 +75,7 @@ const router = new Router({
 //守卫 若没有登录则无法打开 收藏页 个人详情页
 router.beforeEach((to, from, next) => {
   if (!$storage.getSession("user")) {
-    if (to.path == "/userinfo") {
+    if (to.path == "/userinfo"||to.path == "/collection") {
       router.push({
         path: '/user/login'
       })

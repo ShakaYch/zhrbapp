@@ -17,7 +17,8 @@
         <span>{{data.comments || '…'}}</span>
       </li>
       <li>
-        <i class="iconfont icon-icon_likegood" @click="like"></i>
+        <i class="iconfont icon-icon_likegood" v-if="!ifLike" @click="like(0)"></i>
+        <i class="iconfont icon-icon_likegood_fill" v-if="ifLike" @click="like(1)"></i>
         <span>{{data.popularity || '…'}}</span>
       </li>
     </ul>
@@ -33,7 +34,8 @@ export default {
       // 点赞评论数量
       data: {},
       //是否收藏
-      ifCollect: false
+      ifCollect: false,
+      ifLike: false
     };
   },
   beforeMount() {
@@ -81,7 +83,16 @@ export default {
       });
       toast.show();
     },
-    like() {},
+    //点赞
+    like(type) {
+      this.ifLike = !this.ifLike;
+      let text = type == 0 ? '<i class="iconfont icon-icon_likegood_fill"></i> +1' : '<i class="iconfont icon-icon_likegood"></i> -1'
+      const toast = this.$createToast({
+        txt: text,
+        type: "txt"
+      });
+      toast.show();
+    },
     //评论
     comment() {
       this.$router.push({

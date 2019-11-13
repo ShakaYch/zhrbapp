@@ -14,8 +14,8 @@
             <span>我的收藏</span>
           </div>
           <div class="btn_item">
-            <i class="iconfont icon-icon-test"></i>
-            <span>离线下载</span>
+            <!-- <i class="iconfont icon-icon-test"></i> -->
+            <!-- <span>离线下载</span> -->
           </div>
         </div>
         <div class="list_zone">

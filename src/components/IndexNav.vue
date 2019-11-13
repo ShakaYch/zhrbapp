@@ -6,11 +6,11 @@
 
     <div class="title" @click="backToTop">{{msg}}</div>
 
-    <div class="btn_msg">
+    <div class="btn_msg" @click="tobeContinue">
       <i class="iconfont icon-icon_notice"></i>
     </div>
 
-    <div class="btn_msg">
+    <div class="btn_msg" @click="tobeContinue">
       <i class="iconfont icon-icon_more"></i>
     </div>
   </div>
@@ -27,8 +27,17 @@ export default {
       this.$parent.showPopup();
     },
     backToTop() {
-    //去调用index.vue里面的scrollTop方法
-      this.$root.Bus.$emit('gotoTop')
+      //去调用index.vue里面的scrollTop方法
+      this.$root.Bus.$emit("gotoTop");
+    },
+    tobeContinue() {
+      const toast = this.$createToast({
+        txt: "敬请期待……",
+        time: 900,
+        mask: true,
+        type: "loading"
+      });
+      toast.show();
     }
   }
 };
