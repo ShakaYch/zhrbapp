@@ -2,9 +2,9 @@
   <li class="comment_item">
     <div class="user_info">
       <div class="img_zone">
-        <img :src="item.avatar" alt />
+        <img :src="data.avatar" alt />
       </div>
-      <span class="user_name">{{item.author}}</span>
+      <span class="user_name">{{data.author}}</span>
       <span class="btn_more" @click="showCopy">
         <i class="iconfont icon-icon_more"></i>
       </span>
@@ -13,19 +13,20 @@
       </cube-tip>
     </div>
     <div class="comments">
-      <p class="self" id="copy">{{item.content}}</p>
+      <p class="self" id="copy">{{data.content}}</p>
       <p
         :class="hide ?'reply_to text_overflow':'reply_to'"
-        v-if="item.reply_to"
-      >// {{item.reply_to.author}}：{{item.reply_to.content}}</p>
+        v-if="data.reply_to"
+      >// {{data.reply_to.author}}：{{data.reply_to.content}}</p>
     </div>
     <div class="bottom_zone">
-      <div class="time">{{item.time|dateTime(item.time)}}</div>
+      <div class="time">{{data.time|dateTime(data.time)}}</div>
       <div :class="showBtn?'btn_show':'btn_show hide'" @click="showToggle">{{msg}}</div>
       <div class="btn_group">
         <div class="btn_item">
-          {{item.likes}}
-          <i class="iconfont icon-icon_likegood"></i>
+          {{data.likes}}
+          <i class="iconfont icon-icon_likegood" v-if="!ifLike" @click="like(0)"></i>
+          <i class="iconfont icon-icon_likegood_fill" v-if="ifLike" @click="like(1)"></i>
         </div>
         <div class="btn_item">
           <i class="iconfont icon-icon_community_line"></i>
@@ -45,26 +46,30 @@ export default {
       hide: false,
       showBtn: false,
       copyText: "",
-      msg: "显示全部"
+      msg: "显示全部",
+      data:{},
+      //点赞
+      ifLike: false
     };
   },
   created() {
-    if (this.item.reply_to) {
-      if (this.item.reply_to.status == 0) {
-        if (this.item.reply_to.content.length > 50) {
+    this.data = this.item;
+    if (this.data.reply_to) {
+      if (this.data.reply_to.status == 0) {
+        if (this.data.reply_to.content.length > 50) {
           this.hide = true;
           this.showBtn = true;
         }
       } else {
-        this.item.reply_to.content = this.item.reply_to.error_msg;
+        this.data.reply_to.content = this.data.reply_to.error_msg;
       }
     }
   },
   mounted() {
     // 隐藏其余的copy窗口
-    this.$root.Bus.$on('hideCopy', _ => {
+    this.$root.Bus.$on("hideCopy", _ => {
       this.$refs.tip.hide();
-    })
+    });
   },
   methods: {
     showToggle() {
@@ -72,31 +77,35 @@ export default {
       this.msg = this.msg == "显示全部" ? "收起" : "显示全部";
     },
     //显示复制
-    showCopy(){
-      this.$root.Bus.$emit('hideCopy');
+    showCopy() {
+      this.$root.Bus.$emit("hideCopy");
       this.$refs.tip.show();
     },
     //复制
     copy() {
-      this.copyText = this.item.content;
+      this.copyText = this.data.content;
       var clipboard = new Clipboard(".btn_copy");
       clipboard.on("success", e => {
         const toast = this.$createToast({
           txt: "复制成功",
           type: "correct"
         });
-        toast.show()
+        toast.show();
         // 释放内存
         clipboard.destroy();
         e.clearSelection();
       });
       clipboard.on("error", e => {
-          const toast = this.$createToast({
+        const toast = this.$createToast({
           txt: "复制失败",
           type: "error"
         });
-        toast.show()
+        toast.show();
       });
+    },
+    like(type) {
+      this.ifLike = !this.ifLike;
+      type == 0 ? this.data.likes++ : this.data.likes--;
     }
   },
   filters: {

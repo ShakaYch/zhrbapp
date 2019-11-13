@@ -87,6 +87,7 @@ export default {
     like(type) {
       this.ifLike = !this.ifLike;
       let text = type == 0 ? '<i class="iconfont icon-icon_likegood_fill"></i> +1' : '<i class="iconfont icon-icon_likegood"></i> -1'
+      type == 0 ? this.data.popularity++ : this.data.popularity--;
       const toast = this.$createToast({
         txt: text,
         type: "txt"
