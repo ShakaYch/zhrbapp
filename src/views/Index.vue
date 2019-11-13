@@ -92,6 +92,9 @@ export default {
     this.getData();
   },
   activated(){
+    this.$root.Bus.$on('gotoTop', value => {
+      this.scrollTo(0);
+    })
     this.scrollTo(this.offsetTop);
     this.$refs.scroll.refresh();
   },
